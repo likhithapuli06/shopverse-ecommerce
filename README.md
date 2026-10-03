@@ -1,33 +1,38 @@
-🛍️ Shopverse – Premium Fashion E-Commerce
+# 🛍️ Shopverse – Premium Fashion E-Commerce
 
-Shopverse is a modern fashion e-commerce website designed to provide a smooth and visually appealing online shopping experience. It features fashion products for women and men with category browsing, product details, discounts, ratings, and responsive design.
+Shopverse is a modern fashion e-commerce website designed to provide a smooth and visually appealing online shopping experience for fashion lovers.
 
-✨ Features
-👗 Women's & Men's fashion collections
-🔍 Product search and browsing
-🏷️ Product discounts and offers
-⭐ Product ratings
-🔥 Trending products
-🛒 Best Seller products
-🆕 New Arrivals
-💰 Indian Rupee (₹) pricing
-📱 Responsive and mobile-friendly design
-🎨 Modern and user-friendly interface
-🛠️ Technologies Used
-🌐 HTML5
-🎨 CSS3
-⚡ JavaScript
-📱 Responsive Web Design
+## ✨ Features
 
-📂 Project Structure
-Shopverse/
-├── index.html
-├── shop.html
-├── products.js
-├── search.js
-├── slider.js
-├── style.css
-└── assets/
-🎯 Project Purpose
+* 👗 Women's & Men's Fashion Collections
+* 🔍 Product Search
+* 🏷️ Discounts & Offers
+* ⭐ Product Ratings
+* 🔥 Trending Products
+* 🛒 Best Sellers
+* 🆕 New Arrivals
+* 💰 Indian Rupee (₹) Pricing
+* 📱 Responsive Design
+* 🎨 Modern User Interface
+
+## 🛠️ Technologies Used
+
+* 🌐 HTML5
+* 🎨 CSS3
+* ⚡ JavaScript
+
+## 📂 Project Structure
+
+**Main Files:**
+
+* 📄 `index.html` – Main homepage
+* 📄 `shop.html` – Product shopping page
+* 📄 `products.js` – Product information and data
+* 📄 `search.js` – Product search functionality
+* 📄 `slider.js` – Image slider functionality
+* 🎨 `style.css` – Website styling
+* 📁 `assets/` – Images and other website assets
+
+## 🎯 Project Purpose
 
 Shopverse was created as a portfolio project to practice frontend development, JavaScript, product data handling, responsive UI design, and e-commerce website development.
