@@ -1,0 +1,6 @@
+{
+  "name": "Shopverse",
+  "description": "A modern, premium and responsive online fashion shopping website selling Men's and Women's Clothing, Shoes, Watches, Bags, and Accessories.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

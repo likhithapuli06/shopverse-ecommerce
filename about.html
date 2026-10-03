@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    // Guard to prevent uncaught errors when external environment scripts try to redefine or set window.fetch
+    (function() {
+      try {
+        const originalFetch = window.fetch;
+        let currentFetch = originalFetch;
+        Object.defineProperty(window, 'fetch', {
+          get: () => currentFetch,
+          set: (val) => { currentFetch = val; },
+          configurable: true,
+          enumerable: true
+        });
+      } catch (e) {
+        console.warn('Could not redefine window.fetch:', e);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopverse - Our Narrative & Sustainability</title>
+  
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Responsive Layout Stylesheet -->
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    /* --- Page Specific Styles for About Page --- */
+    .about-hero {
+      position: relative;
+      height: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1600&auto=format&fit=crop&q=80');
+      background-size: cover;
+      background-position: center;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .about-hero-content h1 {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .about-hero-content p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
+      animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Narrative Section */
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .narrative-img {
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .narrative-img img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      transition: var(--transition-smooth);
+    }
+
+    .narrative-img:hover img {
+      transform: scale(1.03);
+    }
+
+    .narrative-text h3 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+
+    .narrative-text p {
+      color: var(--text-medium);
+      font-size: 1.05rem;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .narrative-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--black);
+      border-left: 2px solid var(--black);
+      padding-left: 20px;
+      margin: 30px 0;
+    }
+
+    /* Pillars Section */
+    .pillars-section {
+      background-color: var(--light-beige);
+      padding: 80px 0;
+      margin-bottom: 80px;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .pillar-card {
+      background: var(--white);
+      padding: 40px;
+      border-radius: 4px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      transition: var(--transition-smooth);
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pillar-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+      background-color: var(--pastel-pink);
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .pillar-card h4 {
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .pillar-card p {
+      color: var(--text-medium);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Sustainability Section */
+    .sustainability-section {
+      scroll-margin-top: 100px;
+      margin-bottom: 100px;
+    }
+
+    .sustainability-banner {
+      background-color: var(--mint-green);
+      border: 1px solid var(--mint-green-accent);
+      border-radius: 8px;
+      padding: 60px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .sustainability-content h3 {
+      font-family: var(--font-serif);
+      font-size: 2.25rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .sustainability-content p {
+      color: var(--text-medium);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .sustainability-bullets {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .sustainability-bullet-item {
+      display: flex;
+      gap: 12px;
+    }
+
+    .sustainability-bullet-item svg {
+      color: #059669;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .sustainability-bullet-item h5 {
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .sustainability-bullet-item p {
+      color: var(--text-light);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .sustainability-stats {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .stat-box {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 6px;
+      text-align: center;
+      border: 1px solid rgba(167, 243, 208, 0.4);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      font-weight: 600;
+      color: #059669;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Team Section */
+    .team-section {
+      margin-bottom: 80px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .team-card {
+      text-align: center;
+    }
+
+    .team-img-wrapper {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      height: 350px;
+      background-color: var(--light-beige);
+    }
+
+    .team-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition-smooth);
+    }
+
+    .team-card:hover .team-img {
+      transform: scale(1.04);
+    }
+
+    .team-card h4 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .team-card span {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .narrative-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .narrative-img img {
+        height: 400px;
+      }
+      .pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .sustainability-banner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .team-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .about-hero {
+        height: 300px;
+      }
+      .about-hero-content h1 {
+        font-size: 2.25rem;
+      }
+      .sustainability-bullets {
+        grid-template-columns: 1fr;
+      }
+      .sustainability-banner {
+        padding: 30px;
+      }
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      .team-img-wrapper {
+        height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- --- Header / Navigation Bar --- -->
+  <header class="site-header" id="site-header">
+    <div class="container header-container">
+      
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Logo -->
+      <a href="index.html" class="logo" id="header-logo">
+        Shopverse
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- Actions (Search, User Profile, Cart Badge) -->
+      <div class="header-actions">
+        <!-- Search bar (Desktop only) -->
+        <form class="search-form desktop-only" id="header-search-form" action="shop.html" method="GET">
+          <button type="submit" class="search-icon-btn" aria-label="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
+          <input type="text" name="q" placeholder="Search clothes..." class="search-input" aria-label="Search input">
+        </form>
+
+        <!-- User Login link -->
+        <div class="user-account-link" id="header-user-btn">
+          <a href="login.html" class="action-btn" aria-label="Login / Register">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </a>
+        </div>
+
+        <!-- Cart Badge link -->
+        <a href="cart.html" class="action-btn" id="header-cart-btn" aria-label="Shopping Cart">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span class="cart-count">0</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- --- Hero Section --- -->
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <h1>Our Narrative</h1>
+      <p>Redefining luxury fashion through minimalist styling, artisanal craftsmanship, and a devotion to modern sustainability.</p>
+    </div>
+  </section>
+
+  <!-- --- Narrative & Story --- -->
+  <section class="container" style="padding-bottom: 40px;">
+    <div class="narrative-grid">
+      <div class="narrative-img">
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&auto=format&fit=crop&q=80" alt="Boutique Tailoring Studio">
+      </div>
+      <div class="narrative-text">
+        <span style="color: var(--blue-accent); font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Est. 2026</span>
+        <h3 style="margin-top: 8px;">A Standard of Refined Wardrobes</h3>
+        <p>Shopverse was born from a singular, uncompromising vision: to build a modern fashion boutique where timeless styling replaces temporary trends. We believe that true luxury is expressed through the simplicity of form, precise contours, and carefully selected premium fibers.</p>
+        <p>Based in our Nellore atelier, our team blends classic drafting methods with digital-first sizing technologies. This hybrid approach ensures that every wool cardigan, structured linen blazer, and supple leather accessory hangs elegantly and wears flawlessly over years of use.</p>
+        <div class="narrative-quote">
+          "Luxury is not about being noticed, it's about being remembered. We curate wardrobes that express elegance in silence."
+        </div>
+        <p>Every piece we release is thoroughly vetted for color accuracy, fiber durability, and ethical sourcing, creating a curated sanctuary for individuals who value deliberate and thoughtful self-expression.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- Philosophy Pillars Section --- -->
+  <section class="pillars-section">
+    <div class="container">
+      <div class="text-center" style="max-width: 600px; margin: 0 auto 50px auto;">
+        <h2 class="section-title">Our Design Pillars</h2>
+        <p style="color: var(--text-light); font-size: 0.95rem;">Three core disciplines define our collections, from initial textile sourcing to final button-front hand finishes.</p>
+      </div>
+      
+      <div class="pillars-grid">
+        <!-- Pillar 1 -->
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 2 18 2 18 6 6 6 6 2"/><rect width="18" height="12" x="3" y="6" rx="2"/><path d="M6 12h12"/></svg>
+          </div>
+          <h4>Modern Minimalism</h4>
+          <p>We strip away excessive visual noise and heavy branding. Our design aesthetic relies heavily on clean horizontal lines, neutral earth tones, structural silhouettes, and balanced proportions.</p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Artisanal Quality</h4>
+          <p>We source only high-tier natural textiles: Belgian flax linen, premium Inner Mongolian cashmere, organic Mulberry silk, and full-grain vegetable-tanned leather made for vintage patinas.</p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="pillar-card">
+          <div class="pillar-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          </div>
+          <h4>Slow-Fashion Production</h4>
+          <p>By releasing tight seasonal capsules and curated drops rather than endless cycles of fast fashion, we drastically reduce garment waste, resource consumption, and excess stock overhead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- Sustainability Section --- -->
+  <section class="container sustainability-section" id="sustainability">
+    <div class="sustainability-banner">
+      <div class="sustainability-content">
+        <span style="color: #059669; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">Ecological Stewardship</span>
+        <h3>Our Sustainability Vision</h3>
+        <p>At Shopverse, ecological responsibility is not a secondary goal—it is integrated into our daily design protocols. We recognize the profound impact fashion has on our planet, and we aim to be an active part of the solution by choosing premium, low-impact paths.</p>
+        
+        <div class="sustainability-bullets">
+          <!-- Bullet 1 -->
+          <div class="sustainability-bullet-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <h5>100% Organic Fibers</h5>
+              <p>We are actively transitioning our apparel items to utilize exclusively organic-certified cotton and high-standard linen fibers.</p>
+            </div>
+          </div>
+
+          <!-- Bullet 2 -->
+          <div class="sustainability-bullet-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <h5>Low-Impact Tannery</h5>
+              <p>Our designer leather bags and belts are constructed using chrome-free, organic vegetable-tanning processes that recycle 95% of water usage.</p>
+            </div>
+          </div>
+
+          <!-- Bullet 3 -->
+          <div class="sustainability-bullet-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <h5>Carbon-Neutral Freight</h5>
+              <p>We partner exclusively with green logistics providers and purchase high-quality offsets for all customer boutique deliveries.</p>
+            </div>
+          </div>
+
+          <!-- Bullet 4 -->
+          <div class="sustainability-bullet-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <div>
+              <h5>Circular Recycling</h5>
+              <p>Send back your worn-out Shopverse apparel in exchange for store credit. We recycle fibers back into high-quality carded yarns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sustainability-stats">
+        <div class="stat-box">
+          <div class="stat-number">92%</div>
+          <div class="stat-label">Biodegradable Fabrics</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Plastic-Free Packaging</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- Creative Team Section --- -->
+  <section class="container team-section">
+    <div class="text-center" style="max-width: 600px; margin: 0 auto 50px auto;">
+      <h2 class="section-title">The Creative Visionaries</h2>
+      <p style="color: var(--text-light); font-size: 0.95rem;">Bringing diverse global backgrounds together to craft a clean, boutique aesthetic.</p>
+    </div>
+
+    <div class="team-grid">
+      <!-- Member 1 -->
+      <div class="team-card">
+        <div class="team-img-wrapper">
+          <img src="./assets/likhitha-img.jpeg" alt="Likhitha Puli" class="team-img">
+        </div>
+        <h4>Likhitha Puli</h4>
+        <span>Founder & Creative Director</span>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="team-card">
+        <div class="team-img-wrapper">
+          <img src="./assets/taehyung.jpg" alt="Kim Taehyung" class="team-img">
+        </div>
+        <h4>Kim Taehyung</h4>
+        <span>Head of Men's Tailoring</span>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="team-card">
+        <div class="team-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80" alt="Camille Dupont" class="team-img">
+        </div>
+        <h4>Camille Dupont</h4>
+        <span>Chief Textile Alchemist</span>
+      </div>
+
+      <!-- Member 4 -->
+      <div class="team-card">
+        <div class="team-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=80" alt="Rahul Verma" class="team-img">
+        </div>
+        <h4>Rahul Verma</h4>
+        <span>Director of Green Logistics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- Newsletter Subscription Section --- -->
+  <section class="section-padding newsletter-section text-center" id="newsletter-section">
+    <div class="container">
+      <div class="newsletter-box">
+        <h2 class="section-title">Join the Shopverse Circle</h2>
+        <p>Subscribe to receive news about new seasonal drops, style lookbooks, private pre-sales, and get 15% off your very first order.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your primary email address" required aria-label="Newsletter email input">
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- Back to Top Button --- -->
+  <a href="#" class="back-to-top" aria-label="Back to Top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+  </a>
+
+  <!-- --- Site Footer --- -->
+  <footer class="site-footer" id="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <!-- Info Column -->
+        <div class="footer-col">
+          <div class="footer-logo">Shopverse</div>
+          <p>We craft the luxury lifestyle of tomorrow. Shopverse is your premium boutique destination for minimalist styling, elegant clothes, leather bags and automatic timepieces.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Pinterest">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="12" x2="9" y2="12"/><line x1="12" y1="21" x2="12" y2="9"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shop Column -->
+        <div class="footer-col">
+          <h4>Shop Catalog</h4>
+          <ul class="footer-links">
+            <li><a href="shop.html?category=Women's Clothing">Women's Collection</a></li>
+            <li><a href="shop.html?category=Men's Clothing">Men's Tailoring</a></li>
+            <li><a href="shop.html?category=Shoes">Footwear Essentials</a></li>
+            <li><a href="shop.html?category=Watches">Luxury Timepieces</a></li>
+            <li><a href="shop.html?category=Bags">Designer Handbags</a></li>
+          </ul>
+        </div>
+
+        <!-- Info links -->
+        <div class="footer-col">
+          <h4>Company Info</h4>
+          <ul class="footer-links">
+            <li><a href="about.html" class="active">Our Narrative</a></li>
+            <li><a href="about.html#sustainability">Sustainability Vision</a></li>
+            <li><a href="contact.html">Bespoke Inquiries</a></li>
+            <li><a href="contact.html#careers">Boutique Careers</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact details -->
+        <div class="footer-col">
+          <h4>Contact & Location</h4>
+          <ul class="contact-info">
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>2nd Floor, MGB Felicity Mall, Mini Bypass Road, Nellore, AP 524004</span>
+            </li>
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <span>+91 8108934537</span>
+            </li>
+            <li>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <span>concierge@shopverse.com</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Shopverse Boutique Inc. Crafted with precision & elegance. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Do Not Sell My Info</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- --- SCRIPTS IMPORT --- -->
+  <!-- 1. Central Products Database -->
+  <script type="module" src="js/products.js"></script>
+  <!-- 2. Shopping Cart Actions -->
+  <script type="module" src="js/cart.js"></script>
+  <!-- 3. Dynamic Header Search -->
+  <script type="module" src="js/search.js"></script>
+  <!-- 4. Main Layout Helper -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

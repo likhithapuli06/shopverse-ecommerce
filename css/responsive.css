@@ -1,0 +1,260 @@
+/**
+ * Shopverse - Responsive Breakpoints
+ * Responsive design layouts for various viewport widths.
+ */
+
+/* --- Tablet / Mid Desktop Breakpoint (1024px) --- */
+@media (max-width: 1024px) {
+  .hero-slide {
+    height: 580px;
+  }
+  
+  .slide-title {
+    font-size: 3rem;
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+
+  .footer-col:last-child {
+    grid-column: span 3;
+    margin-top: 20px;
+  }
+}
+
+/* --- Small Tablet / Mobile Breakpoint (768px) --- */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .section-padding {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-size: 1.85rem;
+  }
+
+  /* Sticky & Mobile Menu Setup */
+  .mobile-menu-toggle {
+    display: flex;
+    z-index: 150;
+  }
+
+  /* Hamburger Animate to X */
+  .mobile-menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background-color: var(--white);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 100px 40px 40px;
+    gap: 24px;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 120;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+    display: block;
+    width: 100%;
+  }
+
+  /* Hero Slider Mobile Adaptation */
+  .hero-slider-section {
+    height: 520px;
+  }
+
+  .slide-bg {
+    width: 100%;
+    opacity: 0.25; /* Highly transparent to keep text legible on dark overlay */
+  }
+
+  .slide-bg::after {
+    background: radial-gradient(circle, transparent 20%, var(--light-beige) 100%);
+  }
+
+  .slide-content {
+    max-width: 100%;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .slide-title {
+    font-size: 2.5rem;
+  }
+
+  .slider-arrow {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .slider-prev {
+    left: 15px;
+  }
+  
+  .slider-next {
+    right: 15px;
+  }
+
+  /* Categories & Promos */
+  .categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .promos-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .promo-banner {
+    height: 300px;
+  }
+
+  .promo-content {
+    padding: 30px;
+  }
+
+  .promo-title {
+    font-size: 1.8rem;
+  }
+
+  /* Products Grid mobile */
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  /* Features list */
+  .features-badge-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .footer-col:first-child {
+    grid-column: span 2;
+  }
+
+  .footer-col:last-child {
+    grid-column: span 2;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+/* --- Small Mobile Breakpoint (480px) --- */
+@media (max-width: 480px) {
+  .site-header {
+    padding: 0 16px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .slide-title {
+    font-size: 2rem;
+  }
+
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .category-img-container {
+    width: 75px;
+    height: 75px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on small screens is super trendy and modern */
+    gap: 12px;
+  }
+
+  .product-content {
+    padding: 12px;
+  }
+
+  .product-title {
+    font-size: 0.85rem;
+  }
+
+  .product-rating {
+    display: none; /* Hide ratings on mobile grid cards to reduce clutter */
+  }
+
+  .current-price {
+    font-size: 0.95rem;
+  }
+
+  .original-price {
+    font-size: 0.8rem;
+  }
+
+  .product-price-row {
+    padding-top: 8px;
+  }
+
+  .card-add-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .card-add-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .features-badge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-col:first-child, .footer-col:last-child {
+    grid-column: span 1;
+  }
+
+  .footer-bottom-links {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+}
