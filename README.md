@@ -1,20 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+🛍️ Shopverse – Premium Fashion E-Commerce
 
-# Run and deploy your AI Studio app
+Shopverse is a modern fashion e-commerce website designed to provide a smooth and visually appealing online shopping experience. It features fashion products for women and men with category browsing, product details, discounts, ratings, and responsive design.
 
-This contains everything you need to run your app locally.
+✨ Features
+👗 Women's & Men's fashion collections
+🔍 Product search and browsing
+🏷️ Product discounts and offers
+⭐ Product ratings
+🔥 Trending products
+🛒 Best Seller products
+🆕 New Arrivals
+💰 Indian Rupee (₹) pricing
+📱 Responsive and mobile-friendly design
+🎨 Modern and user-friendly interface
+🛠️ Technologies Used
+🌐 HTML5
+🎨 CSS3
+⚡ JavaScript
+📱 Responsive Web Design
 
-View your app in AI Studio: https://ai.studio/apps/d6d1b5b3-4553-46ba-a3d2-39ec40b88f00
+📂 Project Structure
+Shopverse/
+├── index.html
+├── shop.html
+├── products.js
+├── search.js
+├── slider.js
+├── style.css
+└── assets/
+🎯 Project Purpose
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Shopverse was created as a portfolio project to practice frontend development, JavaScript, product data handling, responsive UI design, and e-commerce website development.
